@@ -1,0 +1,43 @@
+{
+  "name": "px-vis-histogram",
+  "version": "1.0.0",
+  "main": [
+    "px-vis-histogram.html"
+  ],
+  "ignore": [
+    ".*",
+    "npm-debug.log",
+    "gulpfile.js",
+    "sass",
+    "test",
+    "OSS_Notice.pdf",
+    ".github",
+    "px-vis-histogram.png",
+    "LICENSE.md",
+    "CONTRIBUTING.md",
+    "HISTORY.md",
+    "README.md",
+    ".jshintrc",
+    ".editorconfig"
+  ],
+  "dependencies": {
+    "polymer": "^2.0.0",
+    "px-vis": "^4.0.0",
+    "px-vis-bar-chart": "https://github.com/PredixDev/px-vis-bar-chart"
+  },
+  "devDependencies": {
+    "px-demo": "^3.0.0",
+    "px-theme": "^3.0.0",
+    "px-defaults-design": "^2.0.0",
+    "px-normalize-design": "^1.0.0",
+    "px-box-sizing-design": "^1.0.0",
+    "px-flexbox-design": "^1.0.0",
+    "iron-ajax": "^2.0.0",
+    "promise-polyfill": "polymerlabs/promise-polyfill#^2.0.1",
+    "px-demo-data": "^1.0.0",
+    "web-component-tester": "^6.0.0"
+  },
+  "resolutions": {
+    "webcomponentsjs": "^1.0.0"
+  }
+}

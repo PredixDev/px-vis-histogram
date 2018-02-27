@@ -1,0 +1,145 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/elements/dom-repeat.html"/>
+<link rel="import" href="../polymer/lib/elements/dom-if.html"/>
+<link rel="import" href="../polymer/lib/utils/async.html"/>
+
+<link rel="import" href="../px-vis/px-vis-behavior-common.html"/>
+<link rel="import" href="../px-vis/px-vis-behavior-d3.html"/>
+<link rel="import" href="../px-vis/px-vis-behavior-chart.html"/>
+
+<link rel="import" href="../px-vis-bar-chart/px-vis-bar-chart.html"/>
+
+<link rel="import" href="css/px-vis-histogram-styles.html">
+
+<!--
+Creates an interactive bar chart, column chart, stacked bar, stacked column, grouped bar, grouped column, deviation bar, and deviation column
+
+### Usage
+
+    <px-vis-bar-chart
+      width="1200"
+      height="500"
+      scale-padding="0.1"
+      margin='{
+        "left": 130,
+        "right": 130,
+        "top": 10,
+        "bottom": 50
+      }'
+      chart-data="[[chartData]]"
+      series-config="[[seriesConfig]]">
+    </px-vis-bar-chart>
+
+### Styling
+The following custom properties are available for styling:
+
+Custom property | Description
+----------------|-------------
+  `--px-vis-axis-color` | The color for the axis lines, axis ticks, and axis tick labels
+  `--px-vis-axis-title-color` | The color for the axis title
+  |
+  |
+  |
+  `--px-vis-gridlines-color` | The color for the gridlines
+  |
+  |
+  |
+  `--px-vis-threshold-color` | The default color for a threshold
+  |
+  |
+  |
+  `--px-vis-reference-curve-default-color` | default color for the reference curve
+  |
+  |
+  |
+  `--px-vis-register-series-name` | The color of the data series name
+  `--px-vis-register-data-value` | The color of the data series value
+  `--px-vis-register-box` | The color of the box around the register when a scrollbar is present
+  |
+  |
+  |
+  `--px-vis-series-color-0` | These are the colors used to represent the data series on the charts. Used in numerical order by default. Colors MUST start at 0 and cannot contain gaps between numbers.
+  `--px-vis-series-color-1` |
+  `--px-vis-series-color-2` |
+  `--px-vis-series-color-n` |
+  |
+  |
+  |
+  `--px-tooltip-background-color` | The color of the tooltip
+  `--px-tooltip-text-color` | The color of the tooltip text
+  `--px-tooltip-light-background-color` | The color of the light version tooltip
+  `--px-tooltip-light-text-color` | The color of the light version tooltip text
+  `--px-tooltip-light-border-color`| The color of the light version tooltip border
+  |
+  |
+  |
+  `--px-vis-font-family` | The font family for all labels and text
+
+@element px-vis-bar-chart
+@blurb Creates an interactive bar chart
+@homepage index.html
+@demo index.html
+-->
+<dom-module id="px-vis-histogram">
+  <template>
+    <style include="px-vis-histogram-styles"></style>
+
+    <px-vis-bar-chart
+      width="[[width]]"
+      height="[[height]]"
+      prevent-resize="[[preventResize]]"
+      show-tooltip="[[showTooltip]]"
+      margin="[[margin]]"
+      chart-data="[[chartData]]"
+      series-config="[[seriesConfig]]"
+      reference-config="[[referenceConfig]]"
+      reference-data="[[referenceData]]"
+      scale-padding="[[scalePadding]]"
+      chart-type="[[chartType]]"
+      register-config="[[registerConfig]]"
+      x-axis-config="[[xAxisConfig]]"
+      y-axis-config="[[yAxisConfig]]">
+    </px-vis-bar-chart>
+
+  </template>
+
+  <script>
+  (() => {
+    const behaviours = [
+      PxVisBehavior.baseSize,
+      PxVisBehavior.margins,
+      PxVisBehaviorChart.chartAutoResize,
+      PxVisBehavior.dataset,
+      PxVisBehavior.completeSeriesConfig,
+      PxVisBehavior.commonMethods,
+      PxVisBehaviorChart.chartCommon,
+      // PxVisBehaviorChart.subConfiguration,
+      PxVisBehaviorChart.registerConfigs,
+      PxVisBehaviorChart.axisConfigs,
+    ];
+    /**
+    *
+    * @polymer
+    * @customElement
+    * @appliesMixin PxVisBehavior.dataset
+    */
+    class PxVisHistogram extends Polymer.mixinBehaviors(behaviours, Polymer.Element) {
+      static get is() { return 'px-vis-histogram'; }
+
+      static get properties() {
+        return {
+          scalePadding: {
+            type: Number,
+            value: 0.1
+          }
+
+
+        };
+      }
+
+    }
+
+    window.customElements.define(PxVisHistogram.is, PxVisHistogram);
+  })();
+  </script>
+</dom-module>

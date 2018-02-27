@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      px-vis-bar-chart Demo</title>
+
+    <link rel="import" href="../px-theme/px-theme-styles.html">
+    <!-- <link rel="import" href="../px-dark-theme/px-dark-theme-styles.html"> -->
+    <custom-style>
+      <style include="px-theme-styles" is="custom-style"></style>
+    </custom-style>
+
+    <link rel="import" href="../promise-polyfill/promise-polyfill-lite.html">
+    <link rel="import" href="px-vis-histogram.html" />
+    <link rel="import" href="../iron-ajax/iron-ajax.html" />
+  </head>
+
+  <body>
+    <dom-bind>
+      <template id="demo" is="dom-bind">
+        <h3>Demo</h3>
+      <!-- data from 2015 https://wonder.cdc.gov/controller/datarequest/D66 -->
+        <iron-ajax
+          url="demo/data.json"
+          handle-as="json"
+          last-response="{{data}}" auto>
+        </iron-ajax>
+
+        <div id="wrap">
+          <h2>Basic Histogram</h2>
+          <px-vis-histogram
+            width="1000"
+            height="500"
+            prevent-resize
+            margin='{
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 30
+            }'
+            chart-data="[[data]]"
+            series-config='{
+              "USA": {
+                "x":"weight",
+                "y":"usa"
+              }
+            }'
+            x-axis-config='{
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            }'
+            y-axis-config='{
+              "title": "Births"
+            }'>
+          </px-vis-histogram>
+          <!--    threshold-data='[
+              {"type":"max", "value":0.45 }
+            ]'
+            threshold-config='{
+              "max": {
+                "showThresholdBox": true
+              }
+            }'
+            reference-config='{
+              "myCurve": {
+                "name": "boffidy bof bof bof"
+              }
+            }'
+            reference-data='[{
+              "x": "A",
+              "y": 0.56
+            },{
+              "x": "B",
+              "y": 0.4
+            },{
+              "x": "C",
+              "y": 0.43
+            },{
+              "x": "D",
+              "y": 0.33
+            },{
+              "x": "E",
+              "y": 0.47
+            },{
+              "x": "F",
+              "y": 0.41
+            }]' -->
+        </div>
+        <div id="wrap">
+          <h2>Stacked Histogram</h2>
+          <px-vis-histogram
+            width="1000"
+            height="500"
+            prevent-resize
+            margin='{
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 30
+            }'
+            chart-data="[[data]]"
+            series-config='{
+              "Northeast": {
+                "x":"weight",
+                "y":"northeast"
+              },
+              "Midwest": {
+                "x":"weight",
+                "y":"midwest"
+              },
+              "South": {
+                "x":"weight",
+                "y":"south"
+              },
+              "West": {
+                "x":"weight",
+                "y":"west"
+              }
+            }'
+            x-axis-config='{
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            }'
+            y-axis-config='{
+              "title": "Births"
+            }'>
+          </px-vis-histogram>
+        </div>
+
+      </template>
+    </dom-bind>
+  </body>
+
+  <script type="text/javascript">
+    (function() {
+      'use strict';
+
+      var onload = function() {
+        // For native Imports, manually fire WebComponentsReady so user code
+        // can use the same code path for native and polyfill'd imports.
+        if (!window.HTMLImports) {
+          document.dispatchEvent(
+            new CustomEvent('WebComponentsReady', {bubbles: true})
+          );
+        }
+      };
+
+      var webComponentsSupported = (
+        'registerElement' in document && 'import' in document.createElement('link') && 'content' in document.createElement('template')
+      );
+
+      if (!webComponentsSupported) {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '../webcomponentsjs/webcomponents-lite.js';
+        script.onload = onload;
+        document.head.appendChild(script);
+      } else {
+        onload();
+      }
+    })();
+  </script>
+
+  <script>
+    document.addEventListener('WebComponentsReady', function() {
+
+    });
+  </script>
+
+</html>
