@@ -56,38 +56,6 @@
               "title": "Births"
             }'>
           </px-vis-histogram>
-          <!--    threshold-data='[
-              {"type":"max", "value":0.45 }
-            ]'
-            threshold-config='{
-              "max": {
-                "showThresholdBox": true
-              }
-            }'
-            reference-config='{
-              "myCurve": {
-                "name": "boffidy bof bof bof"
-              }
-            }'
-            reference-data='[{
-              "x": "A",
-              "y": 0.56
-            },{
-              "x": "B",
-              "y": 0.4
-            },{
-              "x": "C",
-              "y": 0.43
-            },{
-              "x": "D",
-              "y": 0.33
-            },{
-              "x": "E",
-              "y": 0.47
-            },{
-              "x": "F",
-              "y": 0.41
-            }]' -->
         </div>
         <div id="wrap">
           <h2>Stacked Histogram</h2>
@@ -131,6 +99,87 @@
           </px-vis-histogram>
         </div>
 
+        <div id="wrap">
+          <h2>Histogram with reference curve and thresholds</h2>
+          <px-vis-histogram
+            width="1000"
+            height="500"
+            prevent-resize
+            margin='{
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 30
+            }'
+            chart-data="[[data]]"
+            series-config='{
+              "USA": {
+                "x":"weight",
+                "y":"usa"
+              }
+            }'
+            chart-extents='{
+              "y":[0,1600000]
+            }'
+            x-axis-config='{
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            }'
+            y-axis-config='{
+              "title": "Births"
+            }'
+            reference-config='{
+              "myCurve": {
+                "name": "So Gaussian"
+              }
+            }'
+            reference-data='[{
+              "x": "<500",
+              "y": 5800
+            },{
+              "x": "500-999",
+              "y": 20000
+            },{
+              "x": "1000-1499",
+              "y": 29000
+            },{
+              "x": "1500-1999",
+              "y": 60000
+            },{
+              "x": "2000-2499",
+              "y": 250000
+            },{
+              "x": "2500-2999",
+              "y": 800000
+            },{
+              "x": "3000-3499",
+              "y": 1550000
+            },{
+              "x": "3500-3999",
+              "y": 950000
+            },{
+              "x": "4000-4499",
+              "y": 300000
+            },{
+              "x": "4500-4999",
+              "y": 40000
+            },{
+              "x": "5000-8165",
+              "y": 4000
+            }]'
+            threshold-data='[
+              {"type":"-3σ", "value":"1000-1499" },
+              {"type":"3σ", "value":"5000-8165" },
+              {"type":"lots", "value":"1300000" }
+            ]'
+            threshold-config='{
+              "lots": { "format": ".0f" },
+              "-3σ": { "direction": "vertical", "hideValue": "true"},
+              "3σ": { "direction": "vertical", "hideValue": "true"}
+            }'>
+          </px-vis-histogram>
+        </div>
       </template>
     </dom-bind>
   </body>

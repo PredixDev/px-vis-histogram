@@ -92,13 +92,22 @@ Custom property | Description
       margin="[[margin]]"
       chart-data="[[chartData]]"
       series-config="[[seriesConfig]]"
-      reference-config="[[referenceConfig]]"
-      reference-data="[[referenceData]]"
+      chart-extents="[[chartExtents]]"
       scale-padding="[[scalePadding]]"
       chart-type="[[chartType]]"
       register-config="[[registerConfig]]"
       x-axis-config="[[xAxisConfig]]"
-      y-axis-config="[[yAxisConfig]]">
+      y-axis-config="[[yAxisConfig]]"
+      reference-config="[[referenceConfig]]"
+      reference-data="[[referenceData]]"
+      threshold-config="[[thresholdConfig]]"
+      threshold-data="[[thresholdData]]"
+      language="[[language]]"
+      layer="{{layer}}"
+      x="{{x}}"
+      y="{{y}}"
+      domain-changed="{{domainChanged}}"
+      series-clip-path="{{seriesClipPath}}">
     </px-vis-bar-chart>
 
   </template>
@@ -110,12 +119,22 @@ Custom property | Description
       PxVisBehavior.margins,
       PxVisBehaviorChart.chartAutoResize,
       PxVisBehavior.dataset,
+      PxVisBehavior.chartExtents,
       PxVisBehavior.completeSeriesConfig,
       PxVisBehavior.commonMethods,
       PxVisBehaviorChart.chartCommon,
-      // PxVisBehaviorChart.subConfiguration,
       PxVisBehaviorChart.registerConfigs,
       PxVisBehaviorChart.axisConfigs,
+      PxVisBehavior.referenceCurveProps,
+      PxVisBehaviorChart.actionRequest,
+      PxVisBehaviorChart.toolbarSubConfig,
+      PxVisBehaviorChart.chartToolbarConfig,
+      PxVisBehaviorChart.showTooltip,
+      PxVisBehaviorChart.sizeVerticalRegister,
+      PxVisBehavior.thresholds,
+      PxVisBehaviorChart.thresholdConfig,
+      PxVisBehavior.selectionType,
+      Polymer.AppLocalizeBehavior,
     ];
     /**
     *
@@ -131,10 +150,36 @@ Custom property | Description
           scalePadding: {
             type: Number,
             value: 0.1
+          },
+
+          layer: Array,
+
+          _thresholdX: Object,
+          _thesholdDomainChanged: {
+            type: Boolean,
+            value: null
           }
-
-
         };
+      }
+
+      static get observers() {
+        return [
+          '_createThresholdX(x, domainChanged)',
+          '_splitThresholds(thresholdData, thresholdConfig)'
+        ];
+      }
+
+      _createThresholdX() {
+        if(this.domainChanged === null || !this.x) {
+          return;
+        }
+
+        const sq = Px.d3.scaleQuantize()
+          .domain(this.x.range())
+          .range(this.x.domain());
+
+        this.set('_thresholdX', sq);
+        this.set('_thesholdDomainChanged', this.domainChanged);
       }
 
     }
