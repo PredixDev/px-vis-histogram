@@ -153,34 +153,15 @@ Custom property | Description
           },
 
           layer: Array,
-
-          _thresholdX: Object,
-          _thesholdDomainChanged: {
-            type: Boolean,
-            value: null
-          }
         };
       }
 
       static get observers() {
         return [
-          '_createThresholdX(x, domainChanged)',
-          '_splitThresholds(thresholdData, thresholdConfig)'
+
         ];
       }
 
-      _createThresholdX() {
-        if(this.domainChanged === null || !this.x) {
-          return;
-        }
-
-        const sq = Px.d3.scaleQuantize()
-          .domain(this.x.range())
-          .range(this.x.domain());
-
-        this.set('_thresholdX', sq);
-        this.set('_thesholdDomainChanged', this.domainChanged);
-      }
 
     }
 
