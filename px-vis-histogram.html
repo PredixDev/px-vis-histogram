@@ -122,7 +122,6 @@ Custom property | Description
       PxVisBehavior.chartExtents,
       PxVisBehavior.completeSeriesConfig,
       PxVisBehavior.commonMethods,
-      PxVisBehaviorChart.chartCommon,
       PxVisBehaviorChart.registerConfigs,
       PxVisBehaviorChart.axisConfigs,
       PxVisBehavior.referenceCurveProps,
@@ -134,7 +133,7 @@ Custom property | Description
       PxVisBehavior.thresholds,
       PxVisBehaviorChart.thresholdConfig,
       PxVisBehavior.selectionType,
-      Polymer.AppLocalizeBehavior,
+      Polymer.AppLocalizeBehavior
     ];
     /**
     *
@@ -147,21 +146,42 @@ Custom property | Description
 
       static get properties() {
         return {
+          seriesConfig: Object,
           scalePadding: {
             type: Number,
             value: 0.1
           },
-
-          layer: Array,
+          _barSeriesConfig: Object,
+          _lineSeriesConfig: Object,
+          layer: Array
         };
       }
 
       static get observers() {
         return [
-
+          '_splitSeriesConfig(seriesConfig)'
         ];
       }
 
+      _splitSeriesConfig() {
+        if(!this.seriesConfig) {
+          return;
+        }
+
+        let bars = {},
+            lines = {};
+
+        for(let [key,val] of Object.entries(this.seriesConfig)) {
+          if(val.type === 'line') {
+            lines[key] = val;
+          } else {
+            bars[key] = val;
+          }
+        }
+
+        this.set('_lineSeriesConfig', lines);
+        this.set('_barSeriesConfig', bars);
+      }
 
     }
 

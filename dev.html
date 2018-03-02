@@ -180,6 +180,41 @@
             }'>
           </px-vis-histogram>
         </div>
+        <div id="wrap">
+          <h2>Mixed Line and Bar Histogram</h2>
+          <px-vis-histogram
+            width="1000"
+            height="500"
+            prevent-resize
+            margin='{
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 30
+            }'
+            chart-data="[[data]]"
+            series-config='{
+              "West": {
+                "x":"weight",
+                "y":"west",
+                "type": "bar"
+              },
+              "South": {
+                "x":"weight",
+                "y":"south",
+                "type": "line"
+              }
+            }'
+            x-axis-config='{
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            }'
+            y-axis-config='{
+              "title": "Births"
+            }'>
+          </px-vis-histogram>
+        </div>
       </template>
     </dom-bind>
   </body>
