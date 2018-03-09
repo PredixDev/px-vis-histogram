@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-      px-vis-bar-chart Demo</title>
+      px-vis-histogram Demo</title>
 
     <link rel="import" href="../px-theme/px-theme-styles.html">
     <!-- <link rel="import" href="../px-dark-theme/px-dark-theme-styles.html"> -->
@@ -28,7 +28,7 @@
           last-response="{{data}}" auto>
         </iron-ajax>
 
-        <div id="wrap">
+        <!-- <div id="wrap">
           <h2>Basic Histogram</h2>
           <px-vis-histogram
             width="1000"
@@ -203,6 +203,40 @@
                 "x":"weight",
                 "y":"south",
                 "type": "line"
+              }
+            }'
+            x-axis-config='{
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            }'
+            y-axis-config='{
+              "title": "Births"
+            }'>
+          </px-vis-histogram>
+        </div> -->
+        <div id="wrap">
+          <h2>Overlapping Bar Histogram</h2>
+          <px-vis-histogram
+            width="1000"
+            height="500"
+            prevent-resize
+            margin='{
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 30
+            }'
+            overlaping-histograms
+            chart-data="[[data]]"
+            series-config='{
+              "South": {
+                "x":"weight",
+                "y":"south"
+              },
+              "West": {
+                "x":"weight",
+                "y":"west"
               }
             }'
             x-axis-config='{
