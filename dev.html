@@ -28,7 +28,7 @@
           last-response="{{data}}" auto>
         </iron-ajax>
 
-        <!-- <div id="wrap">
+        <div id="wrap">
           <h2>Basic Histogram</h2>
           <px-vis-histogram
             width="1000"
@@ -214,7 +214,7 @@
               "title": "Births"
             }'>
           </px-vis-histogram>
-        </div> -->
+        </div>
         <div id="wrap">
           <h2>Overlapping Bar Histogram</h2>
           <px-vis-histogram
@@ -245,6 +245,235 @@
               "appendUnitInTitle": "true"
             }'
             y-axis-config='{
+              "title": "Births"
+            }'>
+          </px-vis-histogram>
+        </div>
+
+        <div id="wrap">
+          <h2>Basic Bar Histogram</h2>
+          <px-vis-histogram
+            width="1000"
+            height="500"
+            prevent-resize
+            chart-type="bar"
+            margin='{
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 30
+            }'
+            chart-data="[[data]]"
+            series-config='{
+              "USA": {
+                "y":"weight",
+                "x":"usa"
+              }
+            }'
+            x-axis-config='{
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            }'
+            y-axis-config='{
+              "title": "Births"
+            }'>
+          </px-vis-histogram>
+        </div>
+        <div id="wrap">
+          <h2>Stacked Histogram</h2>
+          <px-vis-histogram
+            width="1000"
+            height="500"
+            prevent-resize
+            chart-type="bar"
+            margin='{
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 30
+            }'
+            chart-data="[[data]]"
+            series-config='{
+              "Northeast": {
+                "y":"weight",
+                "x":"northeast"
+              },
+              "Midwest": {
+                "y":"weight",
+                "x":"midwest"
+              },
+              "South": {
+                "y":"weight",
+                "x":"south"
+              },
+              "West": {
+                "y":"weight",
+                "x":"west"
+              }
+            }'
+            y-axis-config='{
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            }'
+            x-axis-config='{
+              "title": "Births"
+            }'>
+          </px-vis-histogram>
+        </div>
+
+        <div id="wrap">
+          <h2>Histogram with reference curve and thresholds</h2>
+          <px-vis-histogram
+            width="1000"
+            height="500"
+            prevent-resize
+            chart-type="bar"
+            margin='{
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 30
+            }'
+            chart-data="[[data]]"
+            series-config='{
+              "USA": {
+                "y":"weight",
+                "x":"usa"
+              }
+            }'
+            chart-extents='{
+              "x":[0,1600000]
+            }'
+            y-axis-config='{
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            }'
+            x-axis-config='{
+              "title": "Births"
+            }'
+            reference-config='{
+              "myCurve": {
+                "name": "So Gaussian",
+                "x":"y",
+                "y":"x"
+              }
+            }'
+            reference-data='[{
+              "x": "<500",
+              "y": 5800
+            },{
+              "x": "500-999",
+              "y": 20000
+            },{
+              "x": "1000-1499",
+              "y": 29000
+            },{
+              "x": "1500-1999",
+              "y": 60000
+            },{
+              "x": "2000-2499",
+              "y": 250000
+            },{
+              "x": "2500-2999",
+              "y": 800000
+            },{
+              "x": "3000-3499",
+              "y": 1550000
+            },{
+              "x": "3500-3999",
+              "y": 950000
+            },{
+              "x": "4000-4499",
+              "y": 300000
+            },{
+              "x": "4500-4999",
+              "y": 40000
+            },{
+              "x": "5000-8165",
+              "y": 4000
+            }]'
+            threshold-data='[
+              {"type":"-3σ", "value":"1000-1499" },
+              {"type":"3σ", "value":"5000-8165" },
+              {"type":"lots", "value":"1300000" }
+            ]'
+            threshold-config='{
+              "lots": { "format": ".0f", "direction":"vertical" },
+              "-3σ": { "hideValue": "true"},
+              "3σ": { "hideValue": "true"}
+            }'>
+          </px-vis-histogram>
+        </div>
+        <div id="wrap">
+          <h2>Mixed Line and Bar Histogram</h2>
+          <px-vis-histogram
+            width="1000"
+            height="500"
+            prevent-resize
+            chart-type="bar"
+            margin='{
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 30
+            }'
+            chart-data="[[data]]"
+            series-config='{
+              "West": {
+                "y":"weight",
+                "x":"west",
+                "type": "bar"
+              },
+              "South": {
+                "y":"weight",
+                "x":"south",
+                "type": "line"
+              }
+            }'
+            y-axis-config='{
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            }'
+            x-axis-config='{
+              "title": "Births"
+            }'>
+          </px-vis-histogram>
+        </div>
+        <div id="wrap">
+          <h2>Overlapping Bar Histogram</h2>
+          <px-vis-histogram
+            width="1000"
+            height="500"
+            prevent-resize
+            chart-type="bar"
+            margin='{
+              "left": 100,
+              "top": 10,
+              "bottom": 50,
+              "right": 30
+            }'
+            overlaping-histograms
+            chart-data="[[data]]"
+            series-config='{
+              "South": {
+                "y":"weight",
+                "x":"south"
+              },
+              "West": {
+                "y":"weight",
+                "x":"west"
+              }
+            }'
+            y-axis-config='{
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            }'
+            x-axis-config='{
               "title": "Births"
             }'>
           </px-vis-histogram>

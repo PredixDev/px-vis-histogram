@@ -174,7 +174,7 @@ Custom property | Description
         }
 
         const data = {};
-        const axis = 'y';//this.xAxisType === 'scaleBand' ? 'y' : 'x';
+        const axis = this.xAxisType === 'scaleBand' ? 'y' : 'x';
 
         Object.entries(this.completeSeriesConfig).forEach(([key,val]) => {
           const stack = Px.d3.stack();
@@ -190,7 +190,7 @@ Custom property | Description
       }
 
       _returnSeriesKey(key) {
-        const axis = 'y';
+        const axis = this.xAxisType === 'scaleBand' ? 'y' : 'x';
         return this.completeSeriesConfig[key][axis]
       }
 
