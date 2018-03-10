@@ -12,7 +12,9 @@
 
 <!-- Imports for this component -->
 <link rel="import" href="../../px-demo/css/px-demo-styles.html" />
+<link rel="import" href="../../promise-polyfill/promise-polyfill-lite.html">
 <link rel="import" href="../px-vis-histogram.html" />
+<link rel="import" href="../../iron-ajax/iron-ajax.html" />
 
 <!-- Demo DOM module -->
 <dom-module id="px-vis-histogram-demo">
@@ -35,8 +37,33 @@
 
       <!-- Component ---------------------------------------------------------->
       <px-demo-component slot="px-demo-component">
+        <iron-ajax
+          url="demo/data.json"
+          handle-as="json"
+          last-response="{{data}}" auto>
+        </iron-ajax>
         <px-vis-histogram
-          counter-value="{{props.counterValue.value}}">
+          prevent-resize="{{props.preventResize.value}}"
+          width="{{props.width.value}}"
+          height="{{props.height.value}}"
+          debounce-resize-timing="{{props.debounceResizeTiming.value}}"
+          margin="{{props.margin.value}}"
+          chart-type="{{props.chartType.value}}"
+          overlaping-histograms="{{props.overlapingHistograms.value}}"
+          show-tooltip="{{props.showTooltip.value}}"
+          tooltip-config="{{props.tooltipConfig.value}}"
+          hide-register="{{props.hideRegister.value}}"
+          register-config="{{props.registerConfig.value}}"
+          chart-data="[[data]]"
+          series-config="{{props.seriesConfig.value}}"
+          threshold-data="{{props.thresholdData.value}}"
+          display-threshold-title="{{props.displayThresholdTitle.value}}"
+          threshold-config="{{props.thresholdConfig.value}}"
+          reference-data="{{props.referenceData.value}}"
+          right-reference-config="{{props.rightReferenceConfig.value}}"
+          left-reference-config="{{props.leftReferenceConfig.value}}"
+          x-axis-config="{{props.xAxisConfig.value}}"
+          y-axis-config="{{props.yAxisConfig.value}}">
         </px-vis-histogram>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
@@ -155,7 +182,7 @@
        */
       props: {
         type: Object,
-        value: function(){ return this.demoProps; }
+        value: function() { return this.demoProps; }
       },
 
       /**
@@ -199,10 +226,224 @@
       configs: {
         type: Array,
         value: function(){
+          return [{
+            configName: "Column",
+            chartType: 'column',
+            overlapingHistograms: false,
+            seriesConfig: {
+              "USA": {
+                "x":"weight",
+                "y":"usa"
+              }
+            },
+            xAxisConfig: {
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            },
+            yAxisConfig: { "title": "Births" },
+            thresholdConfig: {
+              "lots": { "format": ".0f" },
+              "-3σ": { "direction": "vertical", "hideValue": "true"},
+              "3σ": { "direction": "vertical", "hideValue": "true"}
+            }
+          },{
+            configName: "Bar",
+            chartType: 'bar',
+            overlapingHistograms: false,
+            seriesConfig: {
+              "USA": {
+                "y":"weight",
+                "x":"usa"
+              }
+            },
+            yAxisConfig: {
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            },
+            xAxisConfig: { "title": "Births" },
+            thresholdConfig: {
+              "lots": { "format": ".0f", "direction": "vertical" },
+              "-3σ": { "hideValue": "true"},
+              "3σ": { "hideValue": "true"}
+            }
+          },{
+            configName: "Stacked column",
+            chartType: 'column',
+            overlapingHistograms: false,
+            seriesConfig: {
+              "Northeast": {
+                "x":"weight",
+                "y":"northeast"
+              },
+              "Midwest": {
+                "x":"weight",
+                "y":"midwest"
+              },
+              "South": {
+                "x":"weight",
+                "y":"south"
+              },
+              "West": {
+                "x":"weight",
+                "y":"west"
+              }
+            },
+            xAxisConfig: {
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            },
+            yAxisConfig: { "title": "Births" },
+            thresholdConfig: {
+              "lots": { "format": ".0f" },
+              "-3σ": { "direction": "vertical", "hideValue": "true"},
+              "3σ": { "direction": "vertical", "hideValue": "true"}
+            }
+          },{
+            configName: "Stacked bar",
+            chartType: 'bar',
+            overlapingHistograms: false,
+            seriesConfig: {
+              "Northeast": {
+                "y":"weight",
+                "x":"northeast"
+              },
+              "Midwest": {
+                "y":"weight",
+                "x":"midwest"
+              },
+              "South": {
+                "y":"weight",
+                "x":"south"
+              },
+              "West": {
+                "y":"weight",
+                "x":"west"
+              }
+            },
+            yAxisConfig: {
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            },
+            xAxisConfig: { "title": "Births" },
+            thresholdConfig: {
+              "lots": { "format": ".0f", "direction": "vertical" },
+              "-3σ": { "hideValue": "true"},
+              "3σ": { "hideValue": "true"}
+            }
+          },{
+            configName: "Overlaping column",
+            chartType: 'column',
+            overlapingHistograms: true,
+            seriesConfig: {
+              "South": {
+                "x":"weight",
+                "y":"south"
+              },
+              "West": {
+                "x":"weight",
+                "y":"west"
+              }
+            },
+            xAxisConfig: {
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            },
+            yAxisConfig: { "title": "Births" },
+            thresholdConfig: {
+              "lots": { "format": ".0f" },
+              "-3σ": { "direction": "vertical", "hideValue": "true"},
+              "3σ": { "direction": "vertical", "hideValue": "true"}
+            }
+          },{
+            configName: "Overlaping bar",
+            chartType: 'bar',
+            overlapingHistograms: true,
+            seriesConfig: {
+              "South": {
+                "y":"weight",
+                "x":"south"
+              },
+              "West": {
+                "y":"weight",
+                "x":"west"
+              }
+            },
+            yAxisConfig: {
+              "title": "Weight",
+              "unit": "Grams",
+              "appendUnitInTitle": "true"
+            },
+            xAxisConfig: { "title": "Births" },
+            thresholdConfig: {
+              "lots": { "format": ".0f", "direction": "vertical" },
+              "-3σ": { "hideValue": "true"},
+              "3σ": { "hideValue": "true"}
+            }
+          }]
+        }
+      },
+
+      apiHide: {
+        type: Array,
+        value: function() {
           return [
-            { configName: "Default",
-              configReset: true }
+            "generateLayers",
+            "numberOfLayers",
+            "svg",
+            "addClipPath",
+            "cloneSVGElem",
+            "domainChanged",
+            "generateRandomID",
+            "isMultiY",
+            "mutedSeries",
+            "hardMute",
+            "selectedDomain",
+            "wwDataSyncCounter",
+            "zoomInPercentage",
+            "zoomOutPercentage",
+            "zoomStack"
           ]
+        }
+      },
+      apiMarkPrivate: {
+        type: Array,
+        value: function() {
+          return [
+            "clipPath",
+            "completeSeriesConfig",
+            "dataExtents",
+            "_domainChanged",
+            "layer",
+            "pxSvgElem",
+            "seriesClipPath"
+          ]
+        }
+      },
+      apliMarkReadOnly: {
+        type: Array,
+        value: function() {
+          return [
+            "drawnTickValues",
+            "extentsData",
+            "mousePosition",
+            "tooltipData",
+            "x",
+            "y"
+          ]
+        }
+      },
+      apiChangeDescription: {
+        type: Array,
+        value: function() {
+          return [{
+            "name": "chartExtents",
+            "desc": 'Developer set chart extents for the chart. The chart will draw to whatever values are specified in the chartExtents. Setting this and not using "dynamic" will prevent the chart from having to parse the data to find the extents and therefore improve performance for initial rendering ``` { "x": ["low","medium","high"], "y": [5,50] }```'
+          }]
         }
       }
     },
@@ -211,10 +452,134 @@
      * A reference for `this.props`. Read the documentation there.
      */
     demoProps: {
-      counterValue: {
+      preventResize: {
+        type: Boolean,
+        defaultValue: true,
+        inputType: 'toggle'
+      },
+      width: {
         type: Number,
-        defaultValue: '0',
+        defaultValue: '1000',
         inputType: 'text'
+      },
+      height: {
+        type: Number,
+        defaultValue: '500',
+        inputType: 'text'
+      },
+      debounceResizeTiming: {
+        type: Number,
+        defaultValue: 250,
+        inputType: 'text'
+      },
+      margin: {
+        type: Object,
+        defaultValue: {
+          "left": 100,
+          "top": 10,
+          "bottom": 50,
+          "right": 30
+        },
+        inputType: 'code:JSON'
+      },
+
+      chartType: {
+        type: String,
+        defaultValue: 'column'
+      },
+      overlapingHistograms: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      showTooltip: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      tooltipConfig: {
+        type: Object,
+        defaultValue: {},
+        inputType: 'code:JSON'
+      },
+
+      hideRegister: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      registerConfig: {
+        type: Object,
+        defaultValue: { "type": "vertical"},
+        inputType: 'code:JSON'
+      },
+
+      seriesConfig: {
+        type: Object,
+        defaultValue: {
+          "USA": {
+            "x":"weight",
+            "y":"usa"
+          }
+        },
+        inputType: 'code:JSON'
+      },
+
+      thresholdData: {
+        type: Array,
+        defaultValue: [
+          {"type":"-3σ", "value":"1000-1499" },
+          {"type":"3σ", "value":"5000-8165" },
+          {"type":"lots", "value":"1300000" }
+        ],
+        inputType: 'code:JSON'
+      },
+
+      displayThresholdTitle: {
+        type: Boolean,
+        defaultValue: true,
+        inputType: 'toggle'
+      },
+
+      thresholdConfig: {
+        type: Object,
+        defaultValue: {
+          "lots": { "format": ".0f" },
+          "-3σ": { "direction": "vertical", "hideValue": "true"},
+          "3σ": { "direction": "vertical", "hideValue": "true"}
+        },
+        inputType: 'code:JSON'
+      },
+
+      referencedData: {
+        type: Array,
+        defaultValue: [],
+        inputType: 'code:JSON'
+      },
+
+      referenceConfig: {
+        type: Object,
+        defaultValue: {},
+        inputType: 'code:JSON'
+      },
+
+      xAxisConfig: {
+        type: Object,
+        defaultValue: {
+          "title": "Weight",
+          "unit": "Grams",
+          "appendUnitInTitle": "true"
+        },
+        inputType: 'code:JSON'
+      },
+
+      yAxisConfig: {
+        type: Object,
+        defaultValue: { "title": "Births" },
+        inputType: 'code:JSON'
       }
     }
   });
