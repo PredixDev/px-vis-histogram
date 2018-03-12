@@ -173,13 +173,15 @@ Custom property | Description
           return;
         }
 
+        this.set('_supressStacked', this.overlapingHistograms);
+
         const data = {};
         const axis = this.xAxisType === 'scaleBand' ? 'y' : 'x';
 
         Object.entries(this.completeSeriesConfig).forEach(([key,val]) => {
           const stack = Px.d3.stack();
           stack.keys([val[axis]]);
-          data[key] = stack(this.chartData);
+          data[key] = stack(this.chartData.filter((d) => { return this._isValidData(d[val[axis]]); }));
         });
 
         this.set('_overlapData', data);
