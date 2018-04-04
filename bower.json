@@ -22,7 +22,8 @@
   ],
   "dependencies": {
     "polymer": "^2.0.0",
-    "px-vis": "^4.0.0",
+    "px-vis": "^5.0.0",
+    "px-tooltip": "^1.3.0",
     "px-vis-bar-chart": "https://github.com/PredixDev/px-vis-bar-chart"
   },
   "devDependencies": {
