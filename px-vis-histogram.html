@@ -81,11 +81,6 @@ Custom property | Description
 @demo index.html
 -->
 <dom-module id="px-vis-histogram">
-  <template>
-    <style include="px-vis-histogram-styles"></style>
-
-  </template>
-
   <script>
   (() => {
     /**
@@ -98,7 +93,9 @@ Custom property | Description
       static get is() { return 'px-vis-histogram'; }
 
       static get template() {
-        return Polymer.html`${super.template}`;
+        return Polymer.html`
+          <style include="px-vis-histogram-styles"></style>
+          ${super.template}`;
       }
 
       static get stackedBarTemplate() {
