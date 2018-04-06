@@ -95,7 +95,190 @@ Custom property | Description
       static get template() {
         return Polymer.html`
           <style include="px-vis-histogram-styles"></style>
-          ${super.template}`;
+
+          <div id="wrapper" class$="{{_chartWrapperClass}}" >
+            <!--chart + register-->
+            <div class$="{{_registerWrapperClass}} safari-flex-fix">
+              <template is="dom-if" if="[[!hideRegister]]">
+                <px-vis-register
+                  id="register"
+                  dynamic-menu-config="[[dynamicMenuConfig]]"
+                  chart-width="[[width]]"
+                  height="[[_registerHeight]]"
+                  margin="[[margin]]"
+                  class$="{{_getHideClass(hideRegister)}}"
+                  units="[[units]]"
+                  tooltip-data="[[tooltipData]]"
+                  chart-data="[[chartData]]"
+                  complete-series-config="[[completeSeriesConfig]]"
+                  type="{{_registerType}}"
+                  x-axis-type="[[xAxisType]]"
+                  y-axis-type="[[yAxisType]]"
+                  inert-register="[[hideRegister]]"
+                  current-page="[[_registerCurrentPage]]"
+                  total-pages="[[_registerTotalPages]]"
+                  display-page-arrows="[[_registerDisplayPageArrows]]"
+                  display-x-values-only="[[_getRegisterDisplay(yAxisType)]]"
+                  display-y-values-only="[[_getRegisterDisplay(xAxisType)]]"
+                  display-ordinal-value
+                  disable-click
+                  icon-color="[[_registerIconColor]]">
+                </px-vis-register>
+              </template>
+
+              <!-- chart -->
+              <div id="drawingWrapper" class="flex--col flex__item--no-grow inline--flex">
+                <px-vis-toolbar
+                  id="toolbar"
+                  current-sub-config='[[toolbarSubConfig]]'
+                  action-config='{{actionConfig}}'
+                  within-chart
+                  chart-margin="[[margin]]"
+                  config='{"tooltip": true}'>
+                </px-vis-toolbar>
+                <px-vis-svg
+                  id="svg"
+                  class="flex__item--no-grow"
+                  width="[[width]]"
+                  height="[[height]]"
+                  margin="[[margin]]"
+                  svg="{{svg}}"
+                  px-svg-elem="{{pxSvgElem}}">
+                    <px-vis-annotations
+                      slot="4"
+                      svg="[[svg]]"
+                      x="[[x]]"
+                      y="[[y]]"
+                      margin="[[margin]]"
+                      domain-changed="[[domainChanged]]"
+                      complete-series-config="[[completeSeriesConfig]]"
+                      annotation-data="[[annotationData]]"
+                      show-strong-icon="[[showStrongIcon]]">
+                    </px-vis-annotations>
+                </px-vis-svg>
+              </div>
+            </div>
+          </div>
+
+          <px-vis-clip-path
+            svg="[[layer.2]]"
+            width="[[width]]"
+            height="[[height]]"
+            margin="[[margin]]"
+            clip-path="{{clipPath}}"
+            series-clip-path="{{seriesClipPath}}">
+          </px-vis-clip-path>
+
+          <px-vis-axis
+            id="xAxis"
+            svg="[[layer.1]]"
+            rebuild-on-draw
+            domain-changed="[[domainChanged]]"
+            axis="[[x]]"
+            axis-type="[[xAxisType]]"
+            margin="[[margin]]"
+            width="[[width]]"
+            height="[[height]]"
+            orientation="[[xAxisLocation]]"
+            label-position="after"
+            complete-series-config="[[completeSeriesConfig]]"
+            prevent-series-bar>
+          </px-vis-axis>
+          <px-vis-axis
+            id="yAxis"
+            svg="[[layer.1]]"
+            rebuild-on-draw
+            domain-changed="[[domainChanged]]"
+            axis="[[y]]"
+            axis-type="[[yAxisType]]"
+            margin="[[margin]]"
+            width="[[width]]"
+            height="[[height]]"
+            orientation="[[yAxisLocation]]"
+            complete-series-config="[[completeSeriesConfig]]"
+            prevent-series-bar>
+          </px-vis-axis>
+
+          <template is="dom-if" if="[[_showGridlines(hideGridlines, chartType, 'bar')]]" restamp>
+            <px-vis-gridlines
+              svg="[[layer.0]]"
+              axis="[[x]]"
+              margin="[[margin]]"
+              length="[[height]]"
+              orientation="bottom"
+              domain-changed="[[domainChanged]]">
+            </px-vis-gridlines>
+          </template>
+          <template is="dom-if" if="[[_showGridlines(hideGridlines, chartType, 'column')]]" restamp>
+            <px-vis-gridlines
+              svg="[[layer.0]]"
+              axis="[[y]]"
+              margin="[[margin]]"
+              length="[[width]]"
+              orientation="left"
+              domain-changed="[[domainChanged]]">
+            </px-vis-gridlines>
+          </template>
+
+          <px-vis-interaction-space
+            id="interactionSpace"
+            svg="[[layer.4]]"
+            width="[[width]]"
+            height="[[height]]"
+            margin="[[margin]]"
+            x-axis-type="[[xAxisType]]"
+            y-axis-type="[[yAxisType]]"
+            series-keys="[[_seriesKeys]]"
+            complete-series-config="[[completeSeriesConfig]]"
+            chart-data="[[chartData]]"
+            chart-id="[[chartId]]"
+            x="[[x]]"
+            y="[[y]]"
+            domain-changed="[[domainChanged]]"
+            mouse-rect="{{mouseRect}}"
+            tooltip-data="{{tooltipData}}"
+            crosshair-data="{{crosshairData}}"
+            default-empty-data="[[defaultEmptyData]]"
+            generating-crosshair-data="{{generatingCrosshairData}}"
+            interaction-svg="{{interactionSvg}}"
+            extents-data="{{extentsData}}"
+            action-config="[[actionConfig]]"
+            selection-type="[[selectionType]]"
+            extents-action="{{extentsAction}}"
+            muted-series="[[mutedSeries]]"
+            hard-mute="[[hardMute]]"
+            is-bar
+            prevent-web-worker-synchronization="[[preventWebWorkerSynchronization]]"
+            ww-data-sync-counter="[[wwDataSyncCounter]]">
+          </px-vis-interaction-space>
+
+          <px-tooltip
+            id="centralTooltip"
+            smart-orientation
+            ignore-target-events
+            orientation="[[tooltipOrientation]]">
+            <px-vis-central-tooltip-content
+              resources="[[resources]]"
+              use-key-if-missing="[[useKeyIfMissing]]"
+              language="[[language]]"
+              first-date-time-format="[[firstDateTimeFormat]]"
+              second-date-time-format="[[secondDateTimeFormat]]"
+              separator="[[separator]]"
+              timezone="[[timezone]]">
+            </px-vis-central-tooltip-content>
+          </px-tooltip>
+
+          ${this.stackedBarTemplate}
+
+          ${this.groupedBarTemplate}
+
+          ${this.lineTemplate}
+
+          ${this.thresholdsTemplate}
+
+          ${this.referenceCurveTemplate}
+
+          ${this.tooltipTemplate}`;
       }
 
       static get stackedBarTemplate() {
@@ -163,6 +346,10 @@ Custom property | Description
         return [
           '_buildOverlapData(overlapingHistograms, completeSeriesConfig.*)'
         ];
+      }
+
+      constructor() {
+        super();
       }
 
       _buildOverlapData() {
