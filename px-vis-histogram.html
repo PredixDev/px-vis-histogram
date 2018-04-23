@@ -93,6 +93,15 @@ Custom property | Description
       static get is() { return 'px-vis-histogram'; }
 
       static get template() {
+        // Workaround for IE11 until Polymer fixes their issue:
+        // https://github.com/Polymer/polymer/issues/5182
+        //
+        // When the issue is fixed, then we can just use super.template.
+        // Until then we have to copy the whole bar chart template...
+        // return Polymer.html`
+        //   <style include="px-vis-histogram-styles"></style>
+        //   ${super.template}`;
+
         return Polymer.html`
           <style include="px-vis-histogram-styles"></style>
 
