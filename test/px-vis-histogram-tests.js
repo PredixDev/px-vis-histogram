@@ -37,9 +37,7 @@ suite('Basic chart making sure px-vis-bar-chart is working', () => {
     let renderingCB = function() {
       histo.removeEventListener('px-data-vis-colors-applied', colorAppliedCB);
       histo.removeEventListener('px-vis-bar-svg-rendering-ended', renderingCB);
-      setTimeout(() => {
-        done();
-      },100);
+      done();
     };
 
     let colorAppliedCB = function() {
@@ -74,7 +72,11 @@ suite('Basic chart making sure px-vis-bar-chart is working', () => {
         y: "val"
       }
     };
-    assert.deepEqual(histo.completeSeriesConfig, csc);
+    assert.equal(histo.completeSeriesConfig.histo.color, csc.histo.color);
+    assert.equal(histo.completeSeriesConfig.histo.name, csc.histo.name);
+    assert.equal(histo.completeSeriesConfig.histo.type, csc.histo.type);
+    assert.equal(histo.completeSeriesConfig.histo.x, csc.histo.x);
+    assert.equal(histo.completeSeriesConfig.histo.y, csc.histo.y);
   });
 
   test('_stackedChartData', () => {
@@ -176,9 +178,7 @@ suite('Overlay chart', () => {
     let renderingCB = function() {
       histo.removeEventListener('px-data-vis-colors-applied', colorAppliedCB);
       histo.removeEventListener('px-vis-bar-svg-rendering-ended', renderingCB);
-      setTimeout(() => {
-        done();
-      },100);
+      done();
     };
 
     let colorAppliedCB = function() {
@@ -221,7 +221,18 @@ suite('Overlay chart', () => {
         y: "val2"
       }
     };
-    assert.deepEqual(histo.completeSeriesConfig, csc);
+
+    assert.equal(histo.completeSeriesConfig.histo.color, csc.histo.color);
+    assert.equal(histo.completeSeriesConfig.histo.name, csc.histo.name);
+    assert.equal(histo.completeSeriesConfig.histo.type, csc.histo.type);
+    assert.equal(histo.completeSeriesConfig.histo.x, csc.histo.x);
+    assert.equal(histo.completeSeriesConfig.histo.y, csc.histo.y);
+
+    assert.equal(histo.completeSeriesConfig.overlap.color, csc.overlap.color);
+    assert.equal(histo.completeSeriesConfig.overlap.name, csc.overlap.name);
+    assert.equal(histo.completeSeriesConfig.overlap.type, csc.overlap.type);
+    assert.equal(histo.completeSeriesConfig.overlap.x, csc.overlap.x);
+    assert.equal(histo.completeSeriesConfig.overlap.y, csc.overlap.y);
   });
 
   test('_stackedChartData', () => {
