@@ -37,7 +37,9 @@ suite('Basic chart making sure px-vis-bar-chart is working', () => {
     let renderingCB = function() {
       histo.removeEventListener('px-data-vis-colors-applied', colorAppliedCB);
       histo.removeEventListener('px-vis-bar-svg-rendering-ended', renderingCB);
-      done();
+      setTimeout(() => {
+        done();
+      },100);
     };
 
     let colorAppliedCB = function() {
@@ -174,7 +176,9 @@ suite('Overlay chart', () => {
     let renderingCB = function() {
       histo.removeEventListener('px-data-vis-colors-applied', colorAppliedCB);
       histo.removeEventListener('px-vis-bar-svg-rendering-ended', renderingCB);
-      done();
+      setTimeout(() => {
+        done();
+      },100);
     };
 
     let colorAppliedCB = function() {
