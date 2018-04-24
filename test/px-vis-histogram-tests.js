@@ -72,7 +72,7 @@ suite('Basic chart making sure px-vis-bar-chart is working', () => {
         y: "val"
       }
     };
-    assert.equal(histo.completeSeriesConfig.histo.color, csc.histo.color);
+    assert.equal(histo.completeSeriesConfig.histo.color.split(' ').join(''), csc.histo.color);
     assert.equal(histo.completeSeriesConfig.histo.name, csc.histo.name);
     assert.equal(histo.completeSeriesConfig.histo.type, csc.histo.type);
     assert.equal(histo.completeSeriesConfig.histo.x, csc.histo.x);
@@ -222,13 +222,13 @@ suite('Overlay chart', () => {
       }
     };
 
-    assert.equal(histo.completeSeriesConfig.histo.color, csc.histo.color);
+    assert.equal(histo.completeSeriesConfig.histo.color.split(' ').join(''), csc.histo.color);
     assert.equal(histo.completeSeriesConfig.histo.name, csc.histo.name);
     assert.equal(histo.completeSeriesConfig.histo.type, csc.histo.type);
     assert.equal(histo.completeSeriesConfig.histo.x, csc.histo.x);
     assert.equal(histo.completeSeriesConfig.histo.y, csc.histo.y);
 
-    assert.equal(histo.completeSeriesConfig.overlap.color, csc.overlap.color);
+    assert.equal(histo.completeSeriesConfig.overlap.color.split(' ').join(''), csc.overlap.color);
     assert.equal(histo.completeSeriesConfig.overlap.name, csc.overlap.name);
     assert.equal(histo.completeSeriesConfig.overlap.type, csc.overlap.type);
     assert.equal(histo.completeSeriesConfig.overlap.x, csc.overlap.x);
