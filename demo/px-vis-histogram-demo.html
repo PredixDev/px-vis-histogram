@@ -54,7 +54,7 @@ limitations under the License.
       <!-- Component ---------------------------------------------------------->
       <px-demo-component slot="px-demo-component">
         <iron-ajax
-          url="demo/data.json"
+          url="[[importPath]]data.json"
           handle-as="json"
           last-response="{{data}}" auto>
         </iron-ajax>
